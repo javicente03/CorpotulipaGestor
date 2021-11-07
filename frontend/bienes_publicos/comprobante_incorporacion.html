@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="../css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container section">
+        <div class="row">
+            <div class="col s12">
+                <h6 style="text-align: end;">No:</h6>
+            </div>
+            <div class="col s12">
+                <h6 style="text-align: end;">Fecha:</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="container section">
+        <div class="row">
+            <div class="col s6 input-field center">
+                <label>
+                    <input type="checkbox" id="muebles" />
+                    <span class="black-text" style="font-weight: bold;">Bienes Muebles</span>
+                </label>
+            </div>
+            <div class="col s6 input-field center">
+                <label>
+                    <input type="checkbox" id="materiales" />
+                    <span class="black-text" style="font-weight: bold;">Materiales</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 m6 input-field">
+                <label for="organismo">Organismo</label>
+                <input type="text" id="organismo">
+            </div>
+            <div class="col s12 m6 input-field">
+                <label for="denominacion">Denominación</label>
+                <input type="text" id="denominacion">
+            </div>
+            <div class="col s12 m6 input-field">
+                <label for="unidad">Unidad Administrativa</label>
+                <input type="text" id="unidad">
+            </div>
+            <div class="col s12 m6 input-field">
+                <label for="unidad">Unidad Administrativa</label>
+                <input type="text" id="unidad">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="../js/materialize.min.js"></script>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+
+        //Inicializacion de datepicker
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.datepicker');
+            var instances = M.Datepicker.init(elems,
+                options = {
+                    defaultDate: new Date(2021, 1, 3),
+                    setDefaultDate: true
+                }
+            );
+        });
+
+        //Inicializacion de select
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems, options);
+        });
+    </script>
+</body>
+
+</html>
