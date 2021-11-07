@@ -8,8 +8,8 @@
 </head>
 <body>
     <?php
-        if(!isset($router))
-            header("Location: 404");
+        // if(!isset($router))
+        //     header("Location: 404");
     ?>  
     <form id="form">
         <input type="text" name="nombre" id="nombre" value="<?php echo $_SESSION['nombre']?>">
