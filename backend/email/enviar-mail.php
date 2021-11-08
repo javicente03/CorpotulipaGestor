@@ -1,46 +1,119 @@
 <?php
-function sendMail($de,$para,$asunto,$nombre,$apellido,$username,$password){
+/**
+ * This example shows settings to use when sending via Google's Gmail servers.
+ * This uses traditional id & password authentication - look at the gmail_xoauth.phps
+ * example to see how to use XOAUTH2.
+ * The IMAP section shows how to save this message to the 'Sent Mail' folder using IMAP commands.
+ */
+include('PHPMailer.php');
+include('SMTP.php');
+//Import PHPMailer classes into the global namespace
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
-if($asunto == "Bienvenido a Corpotulipa"){
-	$mensaje = "<div style='background-color: rgb(26, 23, 23); width: 250px; padding: 0px; border-radius: .5em; height: 550px;'>
-<h1 style='color: rgb(250, 225, 112); font-size: 2em; text-align: center;'>Bienvenido a Corpotulipa</h1>
-<h1 style='color: rgb(250, 225, 112); text-align: center;' margin-left: 80px;'>".$nombre." ".$apellido."</h1>
-<p style='color: rgb(250, 225, 112); text-align: center;'>Usuario: ".$username."</p>
-<p style='color: rgb(250, 225, 112); text-align: center;'>Contraseña: ".$password."</p>
-<a href='' style='background-color: rgb(250, 225, 112); color: black; padding: 10px; border-radius: .5em; margin-left: 80px; text-decoration: none; font-weight: bold; position: absolute;'>Ingresa Aquí</a>
-</div>";
-} else if($asunto == "Corpotulipa Resetee su contrasena"){
-	$mensaje = "<div style='background-color: rgb(26, 23, 23); width: 250px; padding: 0px; border-radius: .5em; height: 550px;'>
-	<h1 style='color: rgb(250, 225, 112); font-size: 2em; text-align: center;'>Resetee su contraseña</h1>
-	<p style='color: rgb(250, 225, 112); text-align: center;'>Copie este código y peguelo en el siguiente enlace: ".$password."</p>
-	<a href='localhost/corpotulipa-gestion/resetear_password' style='background-color: rgb(250, 225, 112); color: black; padding: 10px; border-radius: .5em; margin-left: 80px; text-decoration: none; font-weight: bold; position: absolute;'>Ingresa Aquí</a>
-	</div>";
+function sendMail($email,$asunto,$nombre,$apellido,$username,$password){
+    if($asunto == 'Bienvenido a Corpotulipa'){
+        $message = file_get_contents('backend/email/templates/welcome.html'); 
+        $message = str_replace('%Nombre%', $nombre, $message); 
+        $message = str_replace('%Apellido%', $apellido, $message); 
+        $message = str_replace('%Username%', $username, $message); 
+        $message = str_replace('%Password%', $password, $message);
+    } else if($asunto == 'Corpotulipa Resetee su contrasena'){
+        $message = file_get_contents('backend/email/templates/reset_password.html'); 
+        $message = str_replace('%Token%', $password, $message); 
+    }
+// require '../vendor/autoload.php';
+
+//Create a new PHPMailer instance
+$mail = new PHPMailer();
+
+//Tell PHPMailer to use SMTP
+$mail->isSMTP();
+
+//Enable SMTP debugging
+//SMTP::DEBUG_OFF = off (for production use)
+//SMTP::DEBUG_CLIENT = client messages
+//SMTP::DEBUG_SERVER = client and server messages
+$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
+//Set the hostname of the mail server
+$mail->Host = 'smtp.gmail.com';
+//Use `$mail->Host = gethostbyname('smtp.gmail.com');`
+//if your network does not support SMTP over IPv6,
+//though this may cause issues with TLS
+
+//Set the SMTP port number:
+// - 465 for SMTP with implicit TLS, a.k.a. RFC8314 SMTPS or
+// - 587 for SMTP+STARTTLS
+$mail->Port = 465;
+
+//Set the encryption mechanism to use:
+// - SMTPS (implicit TLS on port 465) or
+// - STARTTLS (explicit TLS on port 587)
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+
+//Whether to use SMTP authentication
+$mail->SMTPAuth = true;
+
+//Username to use for SMTP authentication - use full email address for gmail
+$mail->Username = 'javicentego@gmail.com';
+
+//Password to use for SMTP authentication
+$mail->Password = 'javileon03*';
+
+//Set who the message is to be sent from
+//Note that with gmail you can only use your account address (same as `Username`)
+//or predefined aliases that you have configured within your account.
+//Do not use user-submitted addresses in here
+$mail->setFrom('javicentego@gmail.com', 'Corpotulipa');
+
+//Set an alternative reply-to address
+//This is a good place to put user-submitted addresses
+$mail->addReplyTo('javicentego@gmail.com', 'First Last');
+
+//Set who the message is to be sent to
+$mail->addAddress($email, $nombre);
+
+//Set the subject line
+$mail->Subject = $asunto;
+
+//Read an HTML message body from an external file, convert referenced images to embedded,
+//convert HTML into a basic plain-text alternative body
+$mail->msgHTML($message);
+//Replace the plain text body with one created manually
+$mail->AltBody = 'This is a plain-text message body';
+
+//Attach an image file
+// $mail->addAttachment('images/phpmailer_mini.png');
+
+//send the message, check for errors
+if (!$mail->send()) {
+    return false;
+} else {
+    return true;
+    //Section 2: IMAP
+    //Uncomment these to save your message in the 'Sent Mail' folder.
+    #if (save_mail($mail)) {
+    #    echo "Message saved!";
+    #}
 }
+// }
+//Section 2: IMAP
+//IMAP commands requires the PHP IMAP Extension, found at: https://php.net/manual/en/imap.setup.php
+//Function to call which uses the PHP imap_*() functions to save messages: https://php.net/manual/en/book.imap.php
+//You can use imap_getmailboxes($imapStream, '/imap/ssl', '*' ) to get a list of available folders or labels, this can
+//be useful if you are trying to get this working on a non-Gmail IMAP server.
+// function save_mail($mail)
+// {
+//     //You can change 'Sent Mail' to any other folder or tag
+//     $path = '{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail';
 
+//     //Tell your server to open an IMAP connection using the same username and password as you used for SMTP
+//     $imapStream = imap_open($path, $mail->Username, $mail->Password);
 
-	include_once("class.phpmailer.php");
-	include_once("class.smtp.php");
-	
-	$mail = new PHPMailer(); //creo un objeto de tipo PHPMailer
-	$mail->IsSMTP(); //protocolo SMTP
-	$mail->SMTPAuth = true;//autenticación en el SMTP
-	$mail->SMTPSecure = "ssl";//SSL security socket layer
-	$mail->Host = "smtp.gmail.com";//servidor de SMTP de gmail
-	$mail->Port = 465;//puerto seguro del servidor SMTP de gmail
-	$mail->From = "javier"; //Remitente del correo
-	$mail->AddAddress($para);// Destinatario
-	$mail->Username = "javicentego@gmail.com";//Aqui pon tu correo de gmail
-	$mail->Password = "javileon03*";//Aqui pon tu contraseña de gmail
-	$mail->Subject = $asunto; //Asunto del correo
-	$mail->Body = $mensaje; //Contenido del correo
-	$mail->WordWrap = 50; //No. de columnas
-	$mail->MsgHTML($mensaje);//Se indica que el cuerpo del correo tendrá formato html
-	
-	if($mail->Send()){ //enviamos el correo por PHPMailer
-		// $respuesta = "El mensaje ha sido enviado con la clase PHPMailer y tu cuenta de gmail =)";
-		// return $respuesta;
-		return true;
-	} else{
-		return false; 
-	}
+//     $result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
+//     imap_close($imapStream);
+
+//     return $result;
+// }
 }

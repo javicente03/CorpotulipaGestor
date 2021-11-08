@@ -48,7 +48,7 @@ if(isset($router)){
         echo "Debe completar todos los datos correctamente";
     }
 } else {
-    header("Location: ../frontend/superuser/crear_usuario.php");
+    header("Location: ../404");
 }
 
 function editarUser($nombre,$apellido,$email,$genero,$nacimiento,$router){
@@ -57,36 +57,44 @@ function editarUser($nombre,$apellido,$email,$genero,$nacimiento,$router){
     if(empty($_FILES['img']['tmp_name']))
         $thumb = $_SESSION['img'];
     else{
-        $archivo = $_FILES['img']['tmp_name'];
-        $thumb = "frontend/img/profile/".$_FILES['img']['name'];
-        move_uploaded_file($archivo,$thumb);
+        include("imagenes/ajuste_img.php");
+        $tipo = $_FILES["img"]["type"];
+        $archivo = $_FILES["img"]["tmp_name"];
+        $upload = subir_imagen($tipo,$archivo,$_SESSION['username']);
+        if($upload)
+            $thumb = "frontend/img/profile/".$_SESSION['username'].$upload;
+        else
+            $thumb = "fail";
     }
 
-    $_SESSION['img'] = $thumb;
-    $_SESSION['nombre'] = $nombre;
-    $_SESSION['apellido'] = $apellido;
-    $_SESSION['email'] = $email;
-    $_SESSION['genero'] = $genero;
-    $_SESSION['birthday'] = $nacimiento;
+    if($thumb != "fail"){
+        $_SESSION['img'] = $thumb;
+        $_SESSION['nombre'] = $nombre;
+        $_SESSION['apellido'] = $apellido;
+        $_SESSION['email'] = $email;
+        $_SESSION['genero'] = $genero;
+        $_SESSION['birthday'] = $nacimiento;
 
-    $sql = "SELECT * FROM usuario WHERE email = '".$email."' AND id != ".$_SESSION['id'];
-    $proceso = $bd->query($sql);
-    if($proceso->num_rows <= 0){
-        $editar = "UPDATE usuario SET email='$email' WHERE id = ".$_SESSION['id'];
-        $edicion = $bd->query($editar);
-        if($edicion){
-            $editar1 = "UPDATE perfil SET nombre='$nombre',apellido='$apellido',genero='$genero',fecha_nacimiento='$nacimiento',img='$thumb' WHERE id_usuario = ".$_SESSION['id'];
-            $edicion1 = $bd->query($editar1);
-            if($edicion1){
-                echo "ok";
+        $sql = "SELECT * FROM usuario WHERE email = '".$email."' AND id != ".$_SESSION['id'];
+        $proceso = $bd->query($sql);
+        if($proceso->num_rows <= 0){
+            $editar = "UPDATE usuario SET email='$email' WHERE id = ".$_SESSION['id'];
+            $edicion = $bd->query($editar);
+            if($edicion){
+                $editar1 = "UPDATE perfil SET nombre='$nombre',apellido='$apellido',genero='$genero',fecha_nacimiento='$nacimiento',img='$thumb' WHERE id_usuario = ".$_SESSION['id'];
+                $edicion1 = $bd->query($editar1);
+                if($edicion1){
+                    echo "ok";
+                } else {
+                    echo "¡Oh no! Ocurrió un error inesperado";
+                }
             } else {
                 echo "¡Oh no! Ocurrió un error inesperado";
             }
         } else {
-            echo "¡Oh no! Ocurrió un error inesperado";
+            echo "Correo electrónico en uso";
         }
-    } else {
-        echo "Correo electrónico en uso";
-    }
+    } else 
+        echo "Archivo inválido, debe subir una imágen JPEG, PNG o GIF";
 }
     

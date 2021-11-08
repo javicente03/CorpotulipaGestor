@@ -51,7 +51,7 @@ if($nombre != "" && $apellido != "" && $email != ""
     echo "Debe completar todos los datos correctamente";
 }
 } else {
-    header("Location: ../frontend/superuser/crear_usuario.php");
+    header("Location: ../404");
 }
 function generarUser($nombre,$apellido,$email,$username,$genero,$departamento,$cargo,$nacimiento,$router){
     $password = bin2hex(random_bytes(5));
@@ -78,8 +78,9 @@ function generarUser($nombre,$apellido,$email,$username,$genero,$departamento,$c
                         $insercion1 = "INSERT INTO perfil (nombre,apellido,genero,departamento_id,cargo_id,fecha_nacimiento) VALUES('$nombre','$apellido','$genero', '$departamento','$cargo','$nacimiento')";
                         $insertar1 = $bd->query($insercion1);
                         if($insertar1){
+                            $asunto = "Bienvenido a Corpotulipa";
                             include("email/enviar-mail.php");
-                            $sendMail = sendMail('Javier',$email,'Bienvenido a Corpotulipa',$nombre,$apellido,$username,$password);
+                            $sendMail = sendMail($email,$asunto,$nombre,$apellido,$username,$password);
                             if($sendMail)
                                 echo "ok";
                         } else {

@@ -16,8 +16,9 @@ if(isset($router)){
                 $borrar = $bd->query($borra);
                 $sql1 = "INSERT INTO reset_password (user_reset,token,fecha_reset) VALUES ('$id','$code','$hoy')";
                 $proceso1 = $bd->query($sql1);
+                $asunto = "Corpotulipa Resetee su contrasena";
                 include("email/enviar-mail.php");
-                $sendMail = sendMail('Javier',$email,'Corpotulipa Resetee su contrasena',0,0,0,$code);
+                $sendMail = sendMail($email,$asunto,0,0,0,$code);
                 if($sendMail)
                     echo "ok";
             } else {

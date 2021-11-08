@@ -88,7 +88,7 @@
                 enctype: 'application/x-www-form-urlencoded',
                 success: function(response)
                 {
-                    if(response=="ok" || response.substring(0, 15) == "<!DOCTYPE html>"){
+                    if(response.substring(response.length-2, response.length) == "ok" || response.substring(0, 15) == "<!DOCTYPE html>"){
                         location.href = "";
                     } else {
                         alert(response)
@@ -113,7 +113,8 @@
                     data: {id:id,accion:accion},
                     success: function(response)
                     {
-                        if(response=="ok"){
+                       
+                        if(response == "ok"){
                             location.href = ""
                         } else if(response=="¡Oh no, ocurrió un error inesperado!" || 
                             response=="Estatus no válido" || response=="Debe completar los datos correctamente") {

@@ -36,5 +36,5 @@ if($departamento != "" && $cargo != ""){
     echo "Debe completar todos los datos correctamente";
 }
 } else {
-    header("Location: ../frotend/superuser/crear_usuario.php");
+    header("Location: ../404");
 }

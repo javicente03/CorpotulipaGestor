@@ -3,10 +3,12 @@
 require 'Router.php';
 require 'controllers/controller.php';
 require 'controllers/controlleruser.php';
+require 'controllers/controllercaja.php';
 
 $router = new Router();
 $controlsuper = new ControllersSuperuser();
 $controluser = new ControllersUser();
+$controlcaja = new ControllersCaja();
 
 session_start();
 
@@ -174,6 +176,30 @@ switch ($router->getController()) {
             header("Location: login");
         break;
 
+    case 'permisos': //Valida que haya una sesión activa, de lo contrario redirige a Login
+        if(isset($_SESSION['id'])){
+            if($_SESSION['permisos'] == "super"){//Requiere permisos de superusuario
+                if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                    $controlsuper->permisos($router); //llama la funcion del controlador
+                } else if($_SERVER['REQUEST_METHOD'] == 'POST')
+                    include("backend/crear_permiso_back.php");
+            } else
+                header("Location: 404");    
+        } else
+            header("Location: login");
+        break;
+
+    case 'eliminar_permiso': //Valida que haya una sesión activa, de lo contrario redirige a Login
+        if(isset($_SESSION['id'])){
+            if($_SESSION['permisos'] == "super"){//Requiere permisos de superusuario
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
+                    include("backend/eliminar_permiso_back.php");
+            } else
+                header("Location: 404");    
+        } else
+            header("Location: login");
+        break;
+
 
     /* ************ USUARIO Y PERFIL ************ */
 
@@ -198,6 +224,28 @@ switch ($router->getController()) {
         if(isset($_SESSION['id'])){
             if($_SERVER['REQUEST_METHOD'] == 'POST')
                 include("backend/password_back.php");    
+        } else
+            header("Location: login");
+        break;
+
+    
+    /* ************ USUARIO Y PERFIL ************ */
+    case 'editar_ut':
+        if(isset($_SESSION['id'])){
+            if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                $controlcaja->editarUt($router); //llama la funcion del controlador
+            } else if($_SERVER['REQUEST_METHOD'] == 'POST')
+                include("backend/editar_ut_back.php");    
+        } else
+            header("Location: login");
+        break;
+
+    case 'vale_chica':
+        if(isset($_SESSION['id'])){
+            if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                $controlcaja->vale($router); //llama la funcion del controlador
+            } else if($_SERVER['REQUEST_METHOD'] == 'POST')
+                include("backend/vale_caja_chica_back.php");    
         } else
             header("Location: login");
         break;

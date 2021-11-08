@@ -75,4 +75,15 @@ class ControllersSuperuser{
         }
         return include("frontend/superuser/editar_cargos.php");
     }
+
+    // Crear Permisos y enlistar
+    public function permisos($router){
+        include('backend/bd.php');
+        $sql="SELECT * FROM permisos INNER JOIN cargo ON permisos.cargo_id = cargo.cargo_id";
+        $proceso=$bd->query($sql);
+        $sql1="SELECT * FROM cargo";
+        $proceso1=$bd->query($sql1);
+        return include("frontend/superuser/crear_permiso.php");
+    }
+
 }

@@ -4,7 +4,7 @@ if(isset($router)){
     if($id!=""){
         include("bd.php");
 
-        $sql="DELETE FROM cargo WHERE cargo_id='$id'";
+        $sql="DELETE FROM permisos WHERE permiso_id='$id'";
         $proceso=$bd->query($sql);
         if($proceso)
             echo "ok";

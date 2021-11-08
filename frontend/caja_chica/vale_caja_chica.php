@@ -22,12 +22,14 @@
                     <div class="col s12 input-field">
                         <i class="material-icons prefix">edit</i>
                         <label for="nombre">Vale de caja chica a nombre de:</label>
-                        <input type="text" name="nombre" id="nombre" class="validate" disabled>
+                        <input type="text" name="nombre" id="nombre" 
+                        class="validate" value="<?php echo $_SESSION['nombre']." ".$_SESSION['apellido'] ?>" disabled>
                     </div>
                     <div class="col s12 m6 input-field">
                         <i class="material-icons prefix">event</i>
                         <label for="fecha">Fecha:</label>
-                        <input type="text" name="fecha" id="fecha" class="datepicker validate" disabled>
+                        <input type="text" name="fecha" id="fecha" class="datepicker validate" 
+                        disabled>
                     </div>
                     <div class="col s12 m6 input-field">
                         <i class="material-icons prefix">grain</i>
@@ -66,7 +68,7 @@
             var elems = document.querySelectorAll('.datepicker');
             var instances = M.Datepicker.init(elems,
                 options = {
-                    defaultDate: new Date(2021, 1, 3),
+                    defaultDate: new Date(<?php echo $year.",".($month-1).",".$day ?>),
                     setDefaultDate: true
                 }
             );
