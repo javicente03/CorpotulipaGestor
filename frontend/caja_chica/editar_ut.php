@@ -28,8 +28,8 @@
                 enctype:'application/x-www-form-urlencoded',
                 success: function(response)
                 {
-                    if(response.substring(response.length-2, response.length) == "ok")
-                        location.href = "editar_ut"
+                    if(response=="ok" || response.substring(0, 15) == "<!DOCTYPE html>")
+                        location.href = ""
                     else 
                         alert(response)
                 }

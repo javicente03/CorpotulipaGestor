@@ -232,10 +232,17 @@ switch ($router->getController()) {
     /* ************ USUARIO Y PERFIL ************ */
     case 'editar_ut':
         if(isset($_SESSION['id'])){
-            if($_SERVER['REQUEST_METHOD'] == 'GET'){
-                $controlcaja->editarUt($router); //llama la funcion del controlador
-            } else if($_SERVER['REQUEST_METHOD'] == 'POST')
-                include("backend/editar_ut_back.php");    
+            include('backend/bd.php');
+            $sql = "SELECT * FROM permisos WHERE accion = 'Editar_UT_Caja_Chica' AND cargo_id =".$_SESSION['cargo_id'];
+            $query = $bd->query($sql); //Revisa si tiene los permisos correspondientes en la tabla permisos
+            if($query->num_rows > 0){ //Si hay al menos un resultado el permiso esta dado a este cargo en referencia a esta acción
+                if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                    $controlcaja->editarUt($router); //llama la funcion del controlador
+                } else if($_SERVER['REQUEST_METHOD'] == 'POST')
+                    include("backend/editar_ut_back.php");    
+            } else {
+                header("Location: 404");
+            }
         } else
             header("Location: login");
         break;
