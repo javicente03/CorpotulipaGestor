@@ -229,7 +229,7 @@ switch ($router->getController()) {
         break;
 
     
-    /* ************ USUARIO Y PERFIL ************ */
+    /* ************ CAJA CHICA ************ */
     case 'editar_ut':
         if(isset($_SESSION['id'])){
             include('backend/bd.php');
@@ -255,6 +255,36 @@ switch ($router->getController()) {
                 include("backend/vale_caja_chica_back.php");    
         } else
             header("Location: login");
+        break;
+
+    case 'solicitudes_cc':
+        if(isset($_SESSION['id'])){
+            include("backend/bd.php");
+            $sql = "SELECT * FROM permisos WHERE accion = 'Aceptar_Sol_CC' AND cargo_id =".$_SESSION['cargo_id'];
+            $query = $bd->query($sql); //Revisa si tiene los permisos correspondientes en la tabla permisos
+            if($query->num_rows > 0){ //Si hay al menos un resultado el permiso esta dado a este cargo en referencia a esta acción
+                if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                    $controlcaja->aceptarSolCc($router); //llama la funcion del controlador
+                } else if($_SERVER['REQUEST_METHOD'] == 'POST')
+                    include("backend/aceptar_sol_cc_back.php");
+            } else {
+                header("Location: 404");
+            }
+        } else
+            header("Location: login");
+        break;
+
+    case 'subir_factura_cc': //Valida que haya una sesión activa, de lo contrario redirige a Login
+        if(isset($_SESSION['id'])){
+            if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                if(!empty($router->getParam())) //Revisa que haya algun parametro
+                    $controlcaja->subirFacturaCC($router); //llama la funcion del controlador
+                else
+                    header("Location: 404");   
+            } else if($_SERVER['REQUEST_METHOD'] == 'POST')
+                include("backend/subir_factura_cc_back.php");   
+        } else
+            header("Location: ../login");
         break;
 
     default:

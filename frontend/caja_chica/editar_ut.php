@@ -9,7 +9,7 @@
 <body>
     <?php
         if(!isset($router))
-            header("Location: ../404");
+            header("Location: ../../404");
         
     ?>
     <form id="form">

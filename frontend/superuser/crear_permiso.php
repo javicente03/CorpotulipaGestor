@@ -14,6 +14,7 @@
     <form id="form">
         <select name="accion" id="accion">
             <option value="Editar_UT_Caja_Chica">Editar UT Caja Chica</option>
+            <option value="Aceptar_Sol_CC">Aceptar Solicitud de Caja Chica</option>
         </select>
         <select name="cargo" id="cargo">
             <?php
