@@ -15,6 +15,7 @@ if(isset($router)){
             $thumb = "fail";
 
         if($thumb != "fail"){
+            $bd->query("UPDATE solicitud_cc SET efectuado = true WHERE id_sol_cc = $id");
             $bd->query("INSERT INTO facturas_cc (id_sol_cc,factura) VALUES ('$id','$thumb')");
             echo "ok";
         } else 

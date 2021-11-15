@@ -287,6 +287,45 @@ switch ($router->getController()) {
             header("Location: ../login");
         break;
 
+    case 'validar_sol_cc':
+        if(isset($_SESSION['id'])){
+            include("backend/bd.php");
+            $sql = "SELECT * FROM permisos WHERE accion = 'Aceptar_Sol_CC' AND cargo_id =".$_SESSION['cargo_id'];
+            $query = $bd->query($sql); //Revisa si tiene los permisos correspondientes en la tabla permisos
+            if($query->num_rows > 0){ //Si hay al menos un resultado el permiso esta dado a este cargo en referencia a esta acción
+                if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                    $controlcaja->validarSolCc($router); //llama la funcion del controlador
+                } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    if(isset($_POST['factura']))
+                        include("backend/facturas_cc_back.php");
+                    else
+                        include("backend/validar_sol_cc_back.php");
+                }
+            } else {
+                header("Location: 404");
+            }
+        } else
+            header("Location: login");
+        break;
+
+    case 'solicitud_repo_cc':
+        if(isset($_SESSION['id'])){
+            include("backend/bd.php");
+            $sql = "SELECT * FROM permisos WHERE accion = 'Aceptar_Sol_CC' AND cargo_id =".$_SESSION['cargo_id'];
+            $query = $bd->query($sql); //Revisa si tiene los permisos correspondientes en la tabla permisos
+            if($query->num_rows > 0){ //Si hay al menos un resultado el permiso esta dado a este cargo en referencia a esta acción
+                if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                    $controlcaja->solicitudRepoCc($router); //llama la funcion del controlador
+                } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    include("backend/solicitud_repo_cc_back.php");
+                }
+            } else {
+                header("Location: 404");
+            }
+        } else
+            header("Location: login");
+        break;
+
     default:
         include("frontend/404.php"); //Pagina de error 404 Page Not Found
         break;
