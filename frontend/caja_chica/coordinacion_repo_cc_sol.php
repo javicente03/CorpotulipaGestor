@@ -58,6 +58,19 @@
             <input type="hidden" name="id" value="<?php echo $router->getParam() ?>">
             <button type="submit">Enviar</button>
         </form>
+        <form id="form2">
+            <input type="text" name="clave">
+            <input type="text" name="motivo">
+            <select name="cargo">
+                <?php
+                    while($cargo=$cargos->fetch_assoc()){
+                        echo "<option value='".$cargo['cargo_id']."'>".$cargo['cargo']."</option>";
+                    }
+                ?>
+            </select>
+            <input type="hidden" name="id" value="<?php echo $router->getParam() ?>">
+            <button type="submit">Enviar</button>
+        </form>
         <br><br><br><br><br>
         <div id="imgs">
         </div>
@@ -80,6 +93,27 @@
 
         $('#form').submit(function(e) {
             var formData = new FormData(document.getElementById("form"));
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: 'coordinacion_repo_cc',
+                data: formData,
+                enctype:'application/x-www-form-urlencoded',
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,
+                success: function(response)
+                {
+                    if(response=="ok" || response.substring(0, 15) == "<!DOCTYPE html>"){
+                        location.href="../coordinacion_repo_cc/"
+                    } else {
+                        alert(response)
+                    }
+                }
+            });
+        });
+
+        $('#form2').submit(function(e) {
+            var formData = new FormData(document.getElementById("form2"));
             e.preventDefault();
             $.ajax({
                 type: "POST",

@@ -59,6 +59,7 @@ class ControllersCaja{
 
     public function recepcionRepoCc($router){
         include("backend/bd.php");
+        $cargos = $bd->query("SELECT * FROM cargo");
         $cc = ($bd->query("SELECT * FROM caja_chica WHERE idcc = 1"))->fetch_assoc();
         if(!empty($router->getParam())){ //Si posee algun parametro cargara la solicitud correspondiente
             $solicitudes =  $bd->query("SELECT * FROM relacion_solicitud_cc INNER JOIN solicitud_cc ON relacion_solicitud_cc.id_sol_cc = solicitud_cc.id_sol_cc WHERE id_solicitud_repo_cc = ".$router->getParam());
@@ -75,6 +76,7 @@ class ControllersCaja{
 
     public function coordinacionRepoCc($router){
         include("backend/bd.php");
+        $cargos = $bd->query("SELECT * FROM cargo");
         $cc = ($bd->query("SELECT * FROM caja_chica WHERE idcc = 1"))->fetch_assoc();
         if(!empty($router->getParam())){ //Si posee algun parametro cargara la solicitud correspondiente
             $solicitudes =  $bd->query("SELECT * FROM relacion_solicitud_cc INNER JOIN solicitud_cc ON relacion_solicitud_cc.id_sol_cc = solicitud_cc.id_sol_cc WHERE id_solicitud_repo_cc = ".$router->getParam());
@@ -91,6 +93,7 @@ class ControllersCaja{
 
     public function analisisRepoCc($router){
         include("backend/bd.php");
+        $cargos = $bd->query("SELECT * FROM cargo");
         $cc = ($bd->query("SELECT * FROM caja_chica WHERE idcc = 1"))->fetch_assoc();
         if(!empty($router->getParam())){ //Si posee algun parametro cargara la solicitud correspondiente
             $solicitudes =  $bd->query("SELECT * FROM relacion_solicitud_cc INNER JOIN solicitud_cc ON relacion_solicitud_cc.id_sol_cc = solicitud_cc.id_sol_cc WHERE id_solicitud_repo_cc = ".$router->getParam());
@@ -107,6 +110,7 @@ class ControllersCaja{
 
     public function contadorRepoCc($router){
         include("backend/bd.php");
+        $cargos = $bd->query("SELECT * FROM cargo");
         $cc = ($bd->query("SELECT * FROM caja_chica WHERE idcc = 1"))->fetch_assoc();
         if(!empty($router->getParam())){ //Si posee algun parametro cargara la solicitud correspondiente
             $solicitudes =  $bd->query("SELECT * FROM relacion_solicitud_cc INNER JOIN solicitud_cc ON relacion_solicitud_cc.id_sol_cc = solicitud_cc.id_sol_cc WHERE id_solicitud_repo_cc = ".$router->getParam());
@@ -123,6 +127,7 @@ class ControllersCaja{
 
     public function gerenciaRepoCc($router){
         include("backend/bd.php");
+        $cargos = $bd->query("SELECT * FROM cargo");
         $cc = ($bd->query("SELECT * FROM caja_chica WHERE idcc = 1"))->fetch_assoc();
         if(!empty($router->getParam())){ //Si posee algun parametro cargara la solicitud correspondiente
             $solicitudes =  $bd->query("SELECT * FROM relacion_solicitud_cc INNER JOIN solicitud_cc ON relacion_solicitud_cc.id_sol_cc = solicitud_cc.id_sol_cc WHERE id_solicitud_repo_cc = ".$router->getParam());

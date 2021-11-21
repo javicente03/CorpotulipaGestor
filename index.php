@@ -337,16 +337,18 @@ switch ($router->getController()) {
                 } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     if(isset($_POST['factura']))
                         include("backend/facturas_cc_back.php");
-                    else{
+                    else if(isset($_POST['motivo'])){
+                        include("backend/rechazo_repo_cc_back.php");
+                    } else {
                         $pass = "cuentadante";
                         include("backend/recepcion_repo_cc_back.php");
                     }
                 }
             } else {
-                header("Location: 404");
+                header("Location: ../404");
             }
         } else
-            header("Location: login");
+            header("Location: ../login");
         break;
 
     case 'coordinacion_repo_cc':
@@ -360,16 +362,18 @@ switch ($router->getController()) {
                 } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     if(isset($_POST['factura']))
                         include("backend/facturas_cc_back.php");
-                    else{
+                    else if(isset($_POST['motivo'])){
+                        include("backend/rechazo_repo_cc_back.php");
+                    } else {
                         $pass = "coordinador";
                         include("backend/recepcion_repo_cc_back.php");
                     }
                 }
             } else {
-                header("Location: 404");
+                header("Location: ../404");
             }
         } else
-            header("Location: login");
+            header("Location: ../login");
         break;
 
     case 'analisis_repo_cc':
@@ -383,16 +387,18 @@ switch ($router->getController()) {
                 } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     if(isset($_POST['factura']))
                         include("backend/facturas_cc_back.php");
-                    else{
+                    else if(isset($_POST['motivo'])){
+                        echo "OAS";
+                    } else {
                         $pass = "analista";
                         include("backend/recepcion_repo_cc_back.php");
                     }
                 }
             } else {
-                header("Location: 404");
+                header("Location: ../404");
             }
         } else
-            header("Location: login");
+            header("Location: ../login");
         break;
 
     case 'contador_repo_cc':
@@ -406,16 +412,18 @@ switch ($router->getController()) {
                 } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     if(isset($_POST['factura']))
                         include("backend/facturas_cc_back.php");
-                    else{
+                    else if(isset($_POST['motivo'])){
+                        include("backend/rechazo_repo_cc_back.php");
+                    } else {
                         $pass = "contador";
                         include("backend/recepcion_repo_cc_back.php");
                     }
                 }
             } else {
-                header("Location: 404");
+                header("Location: ../404");
             }
         } else
-            header("Location: login");
+            header("Location: ../login");
         break;
 
     case 'gerencia_repo_cc':
@@ -429,16 +437,18 @@ switch ($router->getController()) {
                 } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     if(isset($_POST['factura']))
                         include("backend/facturas_cc_back.php");
-                    else{
+                    else if(isset($_POST['motivo'])){
+                        include("backend/rechazo_repo_cc_back.php");
+                    } else {
                         $pass = "gerente";
                         include("backend/recepcion_repo_cc_back.php");
                     }
                 }
             } else {
-                header("Location: 404");
+                header("Location: ../404");
             }
         } else
-            header("Location: login");
+            header("Location: ../login");
         break;
 
     default:
