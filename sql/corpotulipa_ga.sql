@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2021 a las 03:01:25
+-- Tiempo de generación: 22-11-2021 a las 04:00:52
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.12
 
@@ -38,7 +38,7 @@ CREATE TABLE `caja_chica` (
 --
 
 INSERT INTO `caja_chica` (`idcc`, `fondo_actual`, `fondo_maximo`) VALUES
-(1, '99.00', 900);
+(1, '55.93', 900);
 
 -- --------------------------------------------------------
 
@@ -98,15 +98,12 @@ CREATE TABLE `facturas_cc` (
 --
 
 INSERT INTO `facturas_cc` (`id_factura_cc`, `id_sol_cc`, `factura`) VALUES
-(2, 1, 'frontend/img/facturas_cc/sol1n1.png'),
-(3, 1, 'frontend/img/facturas_cc/sol1n2.png'),
-(4, 1, 'frontend/img/facturas_cc/sol1n3.png'),
-(5, 4, 'frontend/img/facturas_cc/sol4n1.jpg'),
-(6, 1, 'frontend/img/facturas_cc/sol1n4.png'),
-(7, 4, 'frontend/img/facturas_cc/sol4n2.jpg'),
-(8, 5, 'frontend/img/facturas_cc/sol5n1.png'),
-(9, 9, 'frontend/img/facturas_cc/sol9n1.png'),
-(10, 10, 'frontend/img/facturas_cc/sol10n1.jpg');
+(1, 1, 'frontend/img/facturas_cc/sol1n1.png'),
+(2, 3, 'frontend/img/facturas_cc/sol3n1.png'),
+(3, 3, 'frontend/img/facturas_cc/sol3n2.jpg'),
+(4, 3, 'frontend/img/facturas_cc/sol3n3.png'),
+(5, 4, 'frontend/img/facturas_cc/sol4n1.png'),
+(6, 5, 'frontend/img/facturas_cc/sol5n1.png');
 
 -- --------------------------------------------------------
 
@@ -127,7 +124,13 @@ CREATE TABLE `notificaciones` (
 --
 
 INSERT INTO `notificaciones` (`id_noti`, `id_usuario`, `texto`, `fecha`, `leido`) VALUES
-(1, 20, 'La solicitud de dinero por caja chica que enviaste ha sido rechazada', '2021-11-14', 0);
+(1, 20, 'La solicitud de dinero por caja chica que enviaste ha sido rechazada', '2021-11-14', 0),
+(2, 20, 'La solicitud de dinero por caja chica que enviaste ha sido rechazada', '2021-11-20', 0),
+(4, 20, 'Rechazo de solicitud de reposición de caja chica #1: Porque yo mando aqui', '2021-11-21', 0),
+(5, 20, 'Rechazo de solicitud de reposición de caja chica #1: Porque yo mando aqui vergaaaaa', '2021-11-21', 0),
+(6, 37, 'Rechazo de solicitud de reposición de caja chica #1: Porque yo mando aqui', '2021-11-21', 0),
+(7, 20, 'Rechazo de solicitud de reposición de caja chica #2: CARAJOOOOOOOOOOOOOOOOO', '2021-11-21', 0),
+(8, 38, 'Rechazo de solicitud de reposición de caja chica #2: CARAJOOOOOOOOOOOOOOOOO', '2021-11-21', 0);
 
 -- --------------------------------------------------------
 
@@ -153,7 +156,8 @@ CREATE TABLE `perfil` (
 
 INSERT INTO `perfil` (`id_usuario`, `nombre`, `apellido`, `genero`, `img`, `email_validado`, `fecha_nacimiento`, `cargo_id`, `departamento_id`) VALUES
 (20, 'javier', 'gerardo', 'Masculino', 'frontend/img/profile/javileon.jpg', 0, '2000-10-28', 1, 1),
-(37, 'Maria jesús', 'Cumare Trompiz', 'Femenino', 'frontend/img/profile/maria.jpg', 0, '1999-10-06', 4, 1);
+(37, 'Maria jesús', 'Cumare Trompiz', 'Femenino', 'frontend/img/profile/maria.jpg', 0, '1999-10-06', 4, 1),
+(38, 'Milimar', 'Cumare Trompiz', 'Femenino', 'frontend/img/profile/none.jpg', 0, '1999-11-26', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -175,7 +179,12 @@ INSERT INTO `permisos` (`permiso_id`, `accion`, `cargo_id`) VALUES
 (13, 'Editar_UT_Caja_Chica', 1),
 (16, 'Editar_UT_Caja_Chica', 6),
 (21, 'Editar_UT_Caja_Chica', 4),
-(22, 'Aceptar_Sol_CC', 1);
+(22, 'Aceptar_Sol_CC', 1),
+(25, 'Recepcion_Repo_CC', 1),
+(26, 'Coordinacion_Repo_CC', 1),
+(27, 'Analisis_Repo_CC', 1),
+(28, 'Contador_Repo_CC', 1),
+(29, 'Gerencia_Repo_CC', 1);
 
 -- --------------------------------------------------------
 
@@ -194,13 +203,8 @@ CREATE TABLE `relacion_solicitud_cc` (
 
 INSERT INTO `relacion_solicitud_cc` (`id_solicitud_repo_cc`, `id_sol_cc`) VALUES
 (1, 1),
-(1, 4),
-(1, 5),
-(1, 6),
-(1, 7),
-(1, 8),
-(2, 9),
-(2, 10);
+(2, 3),
+(2, 4);
 
 -- --------------------------------------------------------
 
@@ -238,14 +242,10 @@ CREATE TABLE `solicitud_cc` (
 --
 
 INSERT INTO `solicitud_cc` (`id_sol_cc`, `id_usuario`, `fecha`, `bs`, `ut_pedido`, `motivo`, `aprobado`, `efectuado`, `validado`) VALUES
-(1, 20, '2021-11-14', '80000.00', '88.89', 'Probando la caja', 1, 1, 1),
-(4, 20, '2021-11-12', '901.00', '1.00', 'pruab 4', 1, 1, 1),
-(5, 20, '2021-11-15', '2000.00', '2.22', 'Prueba 5', 1, 1, 1),
-(6, 20, '2021-11-15', '900.00', '1.00', 'Cajita', 1, 1, 1),
-(7, 20, '2021-11-18', '81000.00', '90.00', 'No dejha', 1, 1, 1),
-(8, 20, '2021-11-18', '728101.00', '809.00', 'AAAAA', 1, 1, 1),
-(9, 20, '2021-11-20', '10.00', '0.01', 'UAS', 1, 1, 1),
-(10, 20, '2021-11-21', '890.00', '0.99', 'Queso', 1, 1, 1);
+(1, 20, '2021-11-20', '20000.00', '22.22', 'Javier', 1, 1, 1),
+(3, 20, '2021-11-21', '220.00', '0.24', 'eee', 1, 1, 1),
+(4, 20, '2021-11-21', '4540.00', '5.04', 'QQQQ', 1, 1, 1),
+(5, 20, '2021-11-22', '4010.00', '4.46', 'LLALALA', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -258,16 +258,20 @@ CREATE TABLE `solicitud_repo_cc` (
   `fecha` date NOT NULL,
   `fondo_momento` decimal(13,2) NOT NULL,
   `custodio` tinyint(1) NOT NULL DEFAULT 0,
-  `cuentadante` tinyint(1) NOT NULL DEFAULT 0
+  `cuentadante` tinyint(1) NOT NULL DEFAULT 0,
+  `coordinador` tinyint(1) NOT NULL DEFAULT 0,
+  `analista` tinyint(1) NOT NULL DEFAULT 0,
+  `contador` tinyint(1) NOT NULL DEFAULT 0,
+  `gerente` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `solicitud_repo_cc`
 --
 
-INSERT INTO `solicitud_repo_cc` (`id_solicitud_repo_cc`, `fecha`, `fondo_momento`, `custodio`, `cuentadante`) VALUES
-(1, '2021-11-19', '99.00', 1, 0),
-(2, '2021-11-21', '99.00', 1, 0);
+INSERT INTO `solicitud_repo_cc` (`id_solicitud_repo_cc`, `fecha`, `fondo_momento`, `custodio`, `cuentadante`, `coordinador`, `analista`, `contador`, `gerente`) VALUES
+(1, '2021-11-20', '65.67', 1, 1, 0, 0, 0, 0),
+(2, '2021-11-21', '60.39', 1, 1, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -290,7 +294,8 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `username`, `password`, `email`, `status`, `permisos`) VALUES
 (20, 'javileon', '$2y$12$yNvjs9xp6IBM40BPrMMWueflOttUhyBO49lJhm8ajarSIu1BJrpAq', 'javicentego@gmail.com', 'active', 'super'),
-(37, 'maria', '$2y$12$/FajvxQKj6q5xfkbfrRIIOf3KluvmyFftQlUzHFPi145nMc8puVcm', 'cocolisosleon@gmail.com', 'active', 'basic');
+(37, 'maria', '$2y$12$/FajvxQKj6q5xfkbfrRIIOf3KluvmyFftQlUzHFPi145nMc8puVcm', 'cocolisosleon@gmail.com', 'active', 'basic'),
+(38, 'mili03', '$2y$12$ICddcLMr5VqreSht8avNpuhEpmfkK4PEnMvpFKVRmYJbQOw0O5bXi', 'maryleon@gmail.com', 'active', 'basic');
 
 -- --------------------------------------------------------
 
@@ -427,25 +432,25 @@ ALTER TABLE `departamento`
 -- AUTO_INCREMENT de la tabla `facturas_cc`
 --
 ALTER TABLE `facturas_cc`
-  MODIFY `id_factura_cc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_factura_cc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
-  MODIFY `id_noti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_noti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil`
 --
 ALTER TABLE `perfil`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `permiso_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `permiso_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `reset_password`
@@ -457,7 +462,7 @@ ALTER TABLE `reset_password`
 -- AUTO_INCREMENT de la tabla `solicitud_cc`
 --
 ALTER TABLE `solicitud_cc`
-  MODIFY `id_sol_cc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_sol_cc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud_repo_cc`
@@ -469,7 +474,7 @@ ALTER TABLE `solicitud_repo_cc`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Restricciones para tablas volcadas
