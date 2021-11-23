@@ -57,4 +57,84 @@ class ControllersCaja{
         return include("frontend/caja_chica/solicitud_repo_cc.php");
     }
 
+    public function recepcionRepoCc($router){
+        include("backend/bd.php");
+        $cc = ($bd->query("SELECT * FROM caja_chica WHERE idcc = 1"))->fetch_assoc();
+        if(!empty($router->getParam())){ //Si posee algun parametro cargara la solicitud correspondiente
+            $solicitudes =  $bd->query("SELECT * FROM relacion_solicitud_cc INNER JOIN solicitud_cc ON relacion_solicitud_cc.id_sol_cc = solicitud_cc.id_sol_cc WHERE id_solicitud_repo_cc = ".$router->getParam());
+            if($solicitudes->num_rows > 0){
+                $bs = 0;
+                $ut = 0;
+                return include("frontend/caja_chica/recepcion_repo_cc_sol.php");
+            }
+        } else{
+            $solicitudes =  $bd->query("SELECT * FROM solicitud_repo_cc WHERE custodio = true AND cuentadante = false");
+            return include("frontend/caja_chica/recepcion_repo_cc.php");
+        }
+    }
+
+    public function coordinacionRepoCc($router){
+        include("backend/bd.php");
+        $cc = ($bd->query("SELECT * FROM caja_chica WHERE idcc = 1"))->fetch_assoc();
+        if(!empty($router->getParam())){ //Si posee algun parametro cargara la solicitud correspondiente
+            $solicitudes =  $bd->query("SELECT * FROM relacion_solicitud_cc INNER JOIN solicitud_cc ON relacion_solicitud_cc.id_sol_cc = solicitud_cc.id_sol_cc WHERE id_solicitud_repo_cc = ".$router->getParam());
+            if($solicitudes->num_rows > 0){
+                $bs = 0;
+                $ut = 0;
+                return include("frontend/caja_chica/coordinacion_repo_cc_sol.php");
+            }
+        } else{
+            $solicitudes =  $bd->query("SELECT * FROM solicitud_repo_cc WHERE custodio = true AND cuentadante = true AND coordinador = false");
+            return include("frontend/caja_chica/coordinacion_repo_cc.php");
+        }
+    }
+
+    public function analisisRepoCc($router){
+        include("backend/bd.php");
+        $cc = ($bd->query("SELECT * FROM caja_chica WHERE idcc = 1"))->fetch_assoc();
+        if(!empty($router->getParam())){ //Si posee algun parametro cargara la solicitud correspondiente
+            $solicitudes =  $bd->query("SELECT * FROM relacion_solicitud_cc INNER JOIN solicitud_cc ON relacion_solicitud_cc.id_sol_cc = solicitud_cc.id_sol_cc WHERE id_solicitud_repo_cc = ".$router->getParam());
+            if($solicitudes->num_rows > 0){
+                $bs = 0;
+                $ut = 0;
+                return include("frontend/caja_chica/analisis_repo_cc_sol.php");
+            }
+        } else{
+            $solicitudes =  $bd->query("SELECT * FROM solicitud_repo_cc WHERE custodio = true AND cuentadante = true AND coordinador = true AND analista = false");
+            return include("frontend/caja_chica/analisis_repo_cc.php");
+        }
+    }
+
+    public function contadorRepoCc($router){
+        include("backend/bd.php");
+        $cc = ($bd->query("SELECT * FROM caja_chica WHERE idcc = 1"))->fetch_assoc();
+        if(!empty($router->getParam())){ //Si posee algun parametro cargara la solicitud correspondiente
+            $solicitudes =  $bd->query("SELECT * FROM relacion_solicitud_cc INNER JOIN solicitud_cc ON relacion_solicitud_cc.id_sol_cc = solicitud_cc.id_sol_cc WHERE id_solicitud_repo_cc = ".$router->getParam());
+            if($solicitudes->num_rows > 0){
+                $bs = 0;
+                $ut = 0;
+                return include("frontend/caja_chica/contador_repo_cc_sol.php");
+            }
+        } else{
+            $solicitudes =  $bd->query("SELECT * FROM solicitud_repo_cc WHERE custodio = true AND cuentadante = true AND coordinador = true AND analista = true AND contador = false");
+            return include("frontend/caja_chica/contador_repo_cc.php");
+        }
+    }
+
+    public function gerenciaRepoCc($router){
+        include("backend/bd.php");
+        $cc = ($bd->query("SELECT * FROM caja_chica WHERE idcc = 1"))->fetch_assoc();
+        if(!empty($router->getParam())){ //Si posee algun parametro cargara la solicitud correspondiente
+            $solicitudes =  $bd->query("SELECT * FROM relacion_solicitud_cc INNER JOIN solicitud_cc ON relacion_solicitud_cc.id_sol_cc = solicitud_cc.id_sol_cc WHERE id_solicitud_repo_cc = ".$router->getParam());
+            if($solicitudes->num_rows > 0){
+                $bs = 0;
+                $ut = 0;
+                return include("frontend/caja_chica/contador_repo_cc_sol.php");
+            }
+        } else{
+            $solicitudes =  $bd->query("SELECT * FROM solicitud_repo_cc WHERE custodio = true AND cuentadante = true AND coordinador = true AND analista = true AND contador = true AND gerente = false");
+            return include("frontend/caja_chica/gerencia_repo_cc.php");
+        }
+    }
+
 }

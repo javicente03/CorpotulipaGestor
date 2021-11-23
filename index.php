@@ -326,6 +326,121 @@ switch ($router->getController()) {
             header("Location: login");
         break;
 
+    case 'recepcion_repo_cc':
+        if(isset($_SESSION['id'])){
+            include("backend/bd.php");
+            $sql = "SELECT * FROM permisos WHERE accion = 'Recepcion_Repo_CC' AND cargo_id =".$_SESSION['cargo_id'];
+            $query = $bd->query($sql); //Revisa si tiene los permisos correspondientes en la tabla permisos
+            if($query->num_rows > 0){ //Si hay al menos un resultado el permiso esta dado a este cargo en referencia a esta acción
+                if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                    $controlcaja->recepcionRepoCc($router); //llama la funcion del controlador
+                } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    if(isset($_POST['factura']))
+                        include("backend/facturas_cc_back.php");
+                    else{
+                        $pass = "cuentadante";
+                        include("backend/recepcion_repo_cc_back.php");
+                    }
+                }
+            } else {
+                header("Location: 404");
+            }
+        } else
+            header("Location: login");
+        break;
+
+    case 'coordinacion_repo_cc':
+        if(isset($_SESSION['id'])){
+            include("backend/bd.php");
+            $sql = "SELECT * FROM permisos WHERE accion = 'Coordinacion_Repo_CC' AND cargo_id =".$_SESSION['cargo_id'];
+            $query = $bd->query($sql); //Revisa si tiene los permisos correspondientes en la tabla permisos
+            if($query->num_rows > 0){ //Si hay al menos un resultado el permiso esta dado a este cargo en referencia a esta acción
+                if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                    $controlcaja->coordinacionRepoCc($router); //llama la funcion del controlador
+                } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    if(isset($_POST['factura']))
+                        include("backend/facturas_cc_back.php");
+                    else{
+                        $pass = "coordinador";
+                        include("backend/recepcion_repo_cc_back.php");
+                    }
+                }
+            } else {
+                header("Location: 404");
+            }
+        } else
+            header("Location: login");
+        break;
+
+    case 'analisis_repo_cc':
+        if(isset($_SESSION['id'])){
+            include("backend/bd.php");
+            $sql = "SELECT * FROM permisos WHERE accion = 'Analisis_Repo_CC' AND cargo_id =".$_SESSION['cargo_id'];
+            $query = $bd->query($sql); //Revisa si tiene los permisos correspondientes en la tabla permisos
+            if($query->num_rows > 0){ //Si hay al menos un resultado el permiso esta dado a este cargo en referencia a esta acción
+                if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                    $controlcaja->analisisRepoCc($router); //llama la funcion del controlador
+                } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    if(isset($_POST['factura']))
+                        include("backend/facturas_cc_back.php");
+                    else{
+                        $pass = "analista";
+                        include("backend/recepcion_repo_cc_back.php");
+                    }
+                }
+            } else {
+                header("Location: 404");
+            }
+        } else
+            header("Location: login");
+        break;
+
+    case 'contador_repo_cc':
+        if(isset($_SESSION['id'])){
+            include("backend/bd.php");
+            $sql = "SELECT * FROM permisos WHERE accion = 'Contador_Repo_CC' AND cargo_id =".$_SESSION['cargo_id'];
+            $query = $bd->query($sql); //Revisa si tiene los permisos correspondientes en la tabla permisos
+            if($query->num_rows > 0){ //Si hay al menos un resultado el permiso esta dado a este cargo en referencia a esta acción
+                if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                    $controlcaja->contadorRepoCc($router); //llama la funcion del controlador
+                } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    if(isset($_POST['factura']))
+                        include("backend/facturas_cc_back.php");
+                    else{
+                        $pass = "contador";
+                        include("backend/recepcion_repo_cc_back.php");
+                    }
+                }
+            } else {
+                header("Location: 404");
+            }
+        } else
+            header("Location: login");
+        break;
+
+    case 'gerencia_repo_cc':
+        if(isset($_SESSION['id'])){
+            include("backend/bd.php");
+            $sql = "SELECT * FROM permisos WHERE accion = 'Gerencia_Repo_CC' AND cargo_id =".$_SESSION['cargo_id'];
+            $query = $bd->query($sql); //Revisa si tiene los permisos correspondientes en la tabla permisos
+            if($query->num_rows > 0){ //Si hay al menos un resultado el permiso esta dado a este cargo en referencia a esta acción
+                if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                    $controlcaja->gerenciaRepoCc($router); //llama la funcion del controlador
+                } else if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    if(isset($_POST['factura']))
+                        include("backend/facturas_cc_back.php");
+                    else{
+                        $pass = "gerente";
+                        include("backend/recepcion_repo_cc_back.php");
+                    }
+                }
+            } else {
+                header("Location: 404");
+            }
+        } else
+            header("Location: login");
+        break;
+
     default:
         include("frontend/404.php"); //Pagina de error 404 Page Not Found
         break;

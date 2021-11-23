@@ -15,6 +15,11 @@
         <select name="accion" id="accion">
             <option value="Editar_UT_Caja_Chica">Editar UT Caja Chica</option>
             <option value="Aceptar_Sol_CC">Aceptar Solicitud de Caja Chica</option>
+            <option value="Recepcion_Repo_CC">Recepción de Reposición de Caja Chica</option>
+            <option value="Coordinacion_Repo_CC">Coordinación de Reposición de Caja Chica</option>
+            <option value="Analisis_Repo_CC">Analisis de Reposición de Caja Chica</option>
+            <option value="Contador_Repo_CC">Contador de Reposición de Caja Chica</option>
+            <option value="Gerencia_Repo_CC">Gerencia Reposición de Caja Chica</option>
         </select>
         <select name="cargo" id="cargo">
             <?php
